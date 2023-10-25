@@ -3,15 +3,22 @@ using System.Data.SqlClient;
 
 namespace AzureSqlApp.Services
 {
-    public class ProductService
+    public class ProductService : IProductService
     {
         private static string db_source = "webappdemo500dbserver.database.windows.net";
         private static string db_user = "sqladmin";
         private static string db_password = "Sql@1212";
         private static string db_database = "webappdemo500db";
 
+        private readonly IConfiguration _configuration;
+        public ProductService(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         private SqlConnection GetConnection()
         {
+            string testConValue = _configuration.GetConnectionString("TestConnection");
             var builder = new SqlConnectionStringBuilder();
             builder.DataSource = db_source;
             builder.UserID = db_user;
