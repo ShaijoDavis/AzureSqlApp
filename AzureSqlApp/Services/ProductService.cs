@@ -18,12 +18,13 @@ namespace AzureSqlApp.Services
 
         private SqlConnection GetConnection()
         {
-            string testConValue = _configuration.GetConnectionString("TestConnection");
+            string testDBValue = _configuration.GetConnectionString("TestDB");
             var builder = new SqlConnectionStringBuilder();
             builder.DataSource = db_source;
             builder.UserID = db_user;
             builder.Password = db_password;
-            builder.InitialCatalog = db_database;
+            // builder.InitialCatalog = db_database;
+            builder.InitialCatalog = testDBValue;
             return new SqlConnection(builder.ConnectionString);
         }
 
