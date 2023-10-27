@@ -39,7 +39,14 @@ namespace AzureSqlApp.Services
             builder.UserID = db_user;
             builder.Password = db_password;
             // builder.InitialCatalog = db_database;
-            builder.InitialCatalog = testDBValue;
+            try
+            {
+                builder.InitialCatalog = testDBValue;
+            }
+            catch (Exception)
+            {
+                builder.InitialCatalog = db_database;
+            }
             return new SqlConnection(builder.ConnectionString);
         }
 
