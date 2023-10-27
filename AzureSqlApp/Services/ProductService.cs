@@ -18,6 +18,9 @@ namespace AzureSqlApp.Services
 
         private SqlConnection GetConnection()
         {
+            // fetching data from Azure App configuration
+            string SQLConnection = _configuration["SQLConnection"];
+
             string testDBValue = _configuration.GetConnectionString("TestDB");
             var builder = new SqlConnectionStringBuilder();
             builder.DataSource = db_source;
