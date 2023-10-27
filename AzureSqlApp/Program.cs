@@ -1,4 +1,5 @@
 using AzureSqlApp.Services;
+using Microsoft.FeatureManagement;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,11 +7,14 @@ var appConfigConnectionString = "Endpoint=https://azureappconfig500.azconfig.io;
 
 builder.Host.ConfigureAppConfiguration(builder =>
 {
-    builder.AddAzureAppConfiguration(appConfigConnectionString);
+    builder.AddAzureAppConfiguration(options =>
+    options.Connect(appConfigConnectionString).UseFeatureFlags());
 });
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddFeatureManagement();
+
 builder.Services.AddTransient<IProductService, ProductService>();
 
 var app = builder.Build();

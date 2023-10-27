@@ -5,8 +5,15 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4"><b>Products List - Version 2</b></h1>
-   <table>
+    @if (Model.IsBeta)
+    {
+        <h1 class="display-4"><b>Products List - Version 1</b></h1>
+    }
+    else
+    {
+        <h1 class="display-4"><b>Products List - Version 2</b></h1>
+    }
+    <table>
        <thead>
            <tr>
                <th scope="col">Product ID</th>

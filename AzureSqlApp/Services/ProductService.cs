@@ -1,4 +1,5 @@
 ﻿using AzureSqlApp.Models;
+using Microsoft.FeatureManagement;
 using System.Data.SqlClient;
 
 namespace AzureSqlApp.Services
@@ -11,9 +12,20 @@ namespace AzureSqlApp.Services
         private static string db_database = "webappdemo500db";
 
         private readonly IConfiguration _configuration;
-        public ProductService(IConfiguration configuration)
+        private readonly IFeatureManager _featureManager;
+        public ProductService(IConfiguration configuration, IFeatureManager featureManager)
         {
             _configuration = configuration;
+            _featureManager = featureManager;
+        }
+
+
+        public async Task<bool> IsBeta()
+        {
+            if (await _featureManager.IsEnabledAsync("beta"))
+                return true;
+            else
+                return false;
         }
 
         private SqlConnection GetConnection()
